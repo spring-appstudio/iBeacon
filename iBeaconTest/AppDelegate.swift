@@ -10,6 +10,10 @@ import UIKit
 import CoreBluetooth
 import CoreLocation
 
+let SAS_APP_STATE_CHANGE_NOTIFICATION = "SAS_BEACON_STATE_UPDATE"
+var sharedBTPeripheralManager : CBPeripheralManager?
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, CBPeripheralManagerDelegate {
 
@@ -22,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CBPeripheralManagerDelega
         let beaconRegion = CLBeaconRegion(proximityUUID: beaconID, identifier: "de.spring-appstudio.test")
         
         let dict  = beaconRegion.peripheralDataWithMeasuredPower(nil)
-        let manager : CBPeripheralManager = CBPeripheralManager(delegate: self, queue: nil)
-        manager.startAdvertising(dict)
+        sharedBTPeripheralManager = CBPeripheralManager(delegate: self, queue: nil)
+        sharedBTPeripheralManager!.startAdvertising(dict)
         
         
         return true
@@ -54,6 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CBPeripheralManagerDelega
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
         println("state update on \(peripheral)")
         println("Have state \(peripheral.state.rawValue)")
+        
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(SAS_APP_STATE_CHANGE_NOTIFICATION, object: peripheral)
     }
 
 
