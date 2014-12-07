@@ -7,15 +7,25 @@
 //
 
 import UIKit
+import CoreBluetooth
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CBPeripheralManagerDelegate {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let beaconID = NSUUID(UUIDString: "89388520-62C6-4F9B-A379-DF853060E5A7")
+        let beaconRegion = CLBeaconRegion(proximityUUID: beaconID, identifier: "de.spring-appstudio.test")
+        
+        let dict  = beaconRegion.peripheralDataWithMeasuredPower(nil)
+        let manager : CBPeripheralManager = CBPeripheralManager(delegate: self, queue: nil)
+        manager.startAdvertising(dict)
+        
+        
         return true
     }
 
@@ -39,6 +49,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
+        println("state update on \(peripheral)")
+        println("Have state \(peripheral.state.rawValue)")
     }
 
 

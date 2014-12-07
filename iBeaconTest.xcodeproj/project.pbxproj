@@ -14,6 +14,7 @@
 		EC002F481A34EEEB00663487 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EC002F461A34EEEB00663487 /* LaunchScreen.xib */; };
 		EC002F541A34EEEB00663487 /* iBeaconTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC002F531A34EEEB00663487 /* iBeaconTestTests.swift */; };
 		EC002F5E1A34EFDC00663487 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC002F5D1A34EFDC00663487 /* CoreBluetooth.framework */; };
+		EC002F601A34F0FE00663487 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC002F5F1A34F0FE00663487 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		EC002F521A34EEEB00663487 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EC002F531A34EEEB00663487 /* iBeaconTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBeaconTestTests.swift; sourceTree = "<group>"; };
 		EC002F5D1A34EFDC00663487 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		EC002F5F1A34F0FE00663487 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC002F601A34F0FE00663487 /* CoreLocation.framework in Frameworks */,
 				EC002F5E1A34EFDC00663487 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,7 +65,6 @@
 		EC002F2F1A34EEEB00663487 = {
 			isa = PBXGroup;
 			children = (
-				EC002F5D1A34EFDC00663487 /* CoreBluetooth.framework */,
 				EC002F3A1A34EEEB00663487 /* iBeaconTest */,
 				EC002F501A34EEEB00663487 /* iBeaconTestTests */,
 				EC002F391A34EEEB00663487 /* Products */,
@@ -94,6 +96,8 @@
 		EC002F3B1A34EEEB00663487 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EC002F5F1A34F0FE00663487 /* CoreLocation.framework */,
+				EC002F5D1A34EFDC00663487 /* CoreBluetooth.framework */,
 				EC002F3C1A34EEEB00663487 /* Info.plist */,
 			);
 			name = "Supporting Files";
