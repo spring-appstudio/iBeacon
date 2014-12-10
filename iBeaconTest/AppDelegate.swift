@@ -11,6 +11,7 @@ import CoreBluetooth
 import CoreLocation
 
 let SAS_APP_STATE_CHANGE_NOTIFICATION = "SAS_BEACON_STATE_UPDATE"
+let SAS_ADVERTIZING_CHANGE_NOTIFICATION = "SAS_ADVERTIZING_STATE_UPDATE"
 var sharedBTPeripheralManager : CBPeripheralManager?
 
 
@@ -28,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CBPeripheralManagerDelega
         let dict  = beaconRegion.peripheralDataWithMeasuredPower(nil)
         sharedBTPeripheralManager = CBPeripheralManager(delegate: self, queue: nil)
         sharedBTPeripheralManager!.startAdvertising(dict)
-        
+        println("Started advertising \(dict)")
         
         return true
     }
@@ -62,6 +63,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CBPeripheralManagerDelega
         
         NSNotificationCenter.defaultCenter().postNotificationName(SAS_APP_STATE_CHANGE_NOTIFICATION, object: peripheral)
     }
+    
+    func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager!, error: NSError!) {
+        println("Started advertising")
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(SAS_ADVERTIZING_CHANGE_NOTIFICATION, object: nil)
+        
+    }
+    
 
 
 }

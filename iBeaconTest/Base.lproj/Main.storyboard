@@ -17,21 +17,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZc-2J-drb">
-                                <rect key="frame" x="113" y="70" width="374" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZc-2J-drb">
+                                <rect key="frame" x="46" y="70" width="508" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eH8-qE-uUu">
+                                <rect key="frame" x="46" y="540" width="508" height="30"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" title="Stop"/>
+                                <connections>
+                                    <action selector="startButtonPushed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Xd1-2E-eUr"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fZc-2J-drb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="97" id="M3B-aw-cIN"/>
+                            <constraint firstItem="fZc-2J-drb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="30" id="M3B-aw-cIN"/>
+                            <constraint firstItem="eH8-qE-uUu" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="30" id="VZQ-pk-dNx"/>
                             <constraint firstItem="fZc-2J-drb" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="50" id="XS8-fI-Phb"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="fZc-2J-drb" secondAttribute="trailing" constant="97" id="xBI-wM-Lbi"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="eH8-qE-uUu" secondAttribute="bottom" constant="30" id="lTQ-t9-HXO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eH8-qE-uUu" secondAttribute="trailing" constant="30" id="wft-pD-21a"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fZc-2J-drb" secondAttribute="trailing" constant="30" id="xBI-wM-Lbi"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="startButton" destination="eH8-qE-uUu" id="h5J-zn-qKK"/>
                         <outlet property="stateLabel" destination="fZc-2J-drb" id="aab-YM-rwe"/>
                     </connections>
                 </viewController>

@@ -11,12 +11,20 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var startButton: UIButton!
+    enum buttonState {
+        case ButtonStateStart,ButtonStateStop
+    }
+    
+    var state : buttonState = buttonState.ButtonStateStart
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "stateNotification", name: SAS_APP_STATE_CHANGE_NOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "advertisingNotification", name: SAS_ADVERTIZING_CHANGE_NOTIFICATION, object: nil)
+
         updateUI()
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -53,9 +61,25 @@ class ViewController: UIViewController {
     
     func stateNotification()->Void {
         println("Notification")
-        updateUI()  
+        //updateUI()
     }
 
+    
+    
+    func advertizingNotification()->Void {
+        println("Advertising Notification")
+        stateLabel.text = "Advertising"
+    }
+    
+    @IBAction func startButtonPushed(sender: AnyObject) {
+        let button : UIButton = sender as UIButton
+        if(state == buttonState.ButtonStateStart) {
+            button.setTitle("Stop", forState: UIControlState.Normal)
+        }
+        else {
+            button.setTitle("Start", forState: UIControlState.Normal)
+        }
+    }
 
 }
 
