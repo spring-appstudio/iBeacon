@@ -10,26 +10,28 @@ import UIKit
 import CoreBluetooth
 import CoreLocation
 
-let SAS_APP_STATE_CHANGE_NOTIFICATION = "SAS_BEACON_STATE_UPDATE"
-let SAS_ADVERTIZING_CHANGE_NOTIFICATION = "SAS_ADVERTIZING_STATE_UPDATE"
-var sharedBTPeripheralManager : CBPeripheralManager?
+
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CBPeripheralManagerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var beaconController : RCSBeaconController?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        let beaconID = NSUUID(UUIDString: "89388520-62C6-4F9B-A379-DF853060E5A7")
-        let beaconRegion = CLBeaconRegion(proximityUUID: beaconID, identifier: "de.spring-appstudio.test")
+//        let beaconID = NSUUID(UUIDString: "89388520-62C6-4F9B-A379-DF853060E5A7")
+//        let beaconRegion = CLBeaconRegion(proximityUUID: beaconID, identifier: "de.spring-appstudio.test")
+//        
+//        let dict  = beaconRegion.peripheralDataWithMeasuredPower(nil)
+//        sharedBTPeripheralManager = CBPeripheralManager(delegate: self, queue: nil)
+//        sharedBTPeripheralManager!.startAdvertising(dict)
+//        println("Started advertising \(dict)")
         
-        let dict  = beaconRegion.peripheralDataWithMeasuredPower(nil)
-        sharedBTPeripheralManager = CBPeripheralManager(delegate: self, queue: nil)
-        sharedBTPeripheralManager!.startAdvertising(dict)
-        println("Started advertising \(dict)")
+        beaconController = RCSBeaconController()
+        beaconController?.startAdvertising()
         
         return true
     }
@@ -56,20 +58,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CBPeripheralManagerDelega
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
-        println("state update on \(peripheral)")
-        println("Have state \(peripheral.state.rawValue)")
-        
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(SAS_APP_STATE_CHANGE_NOTIFICATION, object: peripheral)
-    }
-    
-    func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager!, error: NSError!) {
-        println("Started advertising")
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(SAS_ADVERTIZING_CHANGE_NOTIFICATION, object: nil)
-        
-    }
+//    func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
+//        println("state update on \(peripheral)")
+//        println("Have state \(peripheral.state.rawValue)")
+//        
+//        
+//        NSNotificationCenter.defaultCenter().postNotificationName(SAS_APP_STATE_CHANGE_NOTIFICATION, object: peripheral)
+//    }
+//    
+//    func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager!, error: NSError!) {
+//        println("Started advertising")
+//        
+//        NSNotificationCenter.defaultCenter().postNotificationName(SAS_ADVERTIZING_CHANGE_NOTIFICATION, object: nil)
+//        
+//    }
     
 
 

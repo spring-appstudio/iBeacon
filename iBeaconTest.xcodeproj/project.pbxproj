@@ -15,6 +15,7 @@
 		EC002F541A34EEEB00663487 /* iBeaconTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC002F531A34EEEB00663487 /* iBeaconTestTests.swift */; };
 		EC002F5E1A34EFDC00663487 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC002F5D1A34EFDC00663487 /* CoreBluetooth.framework */; };
 		EC002F601A34F0FE00663487 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC002F5F1A34F0FE00663487 /* CoreLocation.framework */; };
+		ECCEA5591A38D7D3005F7D85 /* RCSBeaconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCEA5581A38D7D3005F7D85 /* RCSBeaconController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		EC002F531A34EEEB00663487 /* iBeaconTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBeaconTestTests.swift; sourceTree = "<group>"; };
 		EC002F5D1A34EFDC00663487 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		EC002F5F1A34F0FE00663487 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		ECCEA5581A38D7D3005F7D85 /* RCSBeaconController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RCSBeaconController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			children = (
 				EC002F3D1A34EEEB00663487 /* AppDelegate.swift */,
 				EC002F3F1A34EEEB00663487 /* ViewController.swift */,
+				ECCEA5581A38D7D3005F7D85 /* RCSBeaconController.swift */,
 				EC002F411A34EEEB00663487 /* Main.storyboard */,
 				EC002F441A34EEEB00663487 /* Images.xcassets */,
 				EC002F461A34EEEB00663487 /* LaunchScreen.xib */,
@@ -223,6 +226,7 @@
 			files = (
 				EC002F401A34EEEB00663487 /* ViewController.swift in Sources */,
 				EC002F3E1A34EEEB00663487 /* AppDelegate.swift in Sources */,
+				ECCEA5591A38D7D3005F7D85 /* RCSBeaconController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

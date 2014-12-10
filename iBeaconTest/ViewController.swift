@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreBluetooth
+import CoreLocation
 
 class ViewController: UIViewController {
 
@@ -22,10 +24,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "stateNotification", name: SAS_APP_STATE_CHANGE_NOTIFICATION, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "advertisingNotification", name: SAS_ADVERTIZING_CHANGE_NOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "stateNotification:", name: SAS_APP_STATE_CHANGE_NOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "advertisingNotification:", name: SAS_ADVERTIZING_CHANGE_NOTIFICATION, object: nil)
 
-        updateUI()
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -36,9 +37,9 @@ class ViewController: UIViewController {
     }
     
     
-    func updateUI()->Void {
-        if let manager = sharedBTPeripheralManager {
-            switch(manager.state) {
+    func updateUI(CBmanager : CBPeripheralManager)->Void {
+        
+        switch(CBmanager.state) {
             case .PoweredOff:
                 stateLabel.text = "Powered Off"
             case .PoweredOn:
@@ -51,22 +52,19 @@ class ViewController: UIViewController {
                 stateLabel.text = "Unknown"
             case .Unsupported:
                 stateLabel.text = "Unsupported"
-            }
         }
-        else {
-            stateLabel.text = "Unknown"
-        }
-        
     }
+        
     
-    func stateNotification()->Void {
-        println("Notification")
-        //updateUI()
+    
+    func stateNotification(notification : NSNotification)->Void {
+        println("Notification \(notification)")
+        updateUI(notification.object! as CBPeripheralManager)
     }
 
     
     
-    func advertizingNotification()->Void {
+    func advertizingNotification(notification : NSNotification)->Void {
         println("Advertising Notification")
         stateLabel.text = "Advertising"
     }
