@@ -23,8 +23,18 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="d9O-6i-X1M">
+                                <rect key="frame" x="238" y="552" width="125" height="29"/>
+                                <segments>
+                                    <segment title="Send"/>
+                                    <segment title="Receive"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentClicked:" destination="vXZ-lx-hvc" eventType="valueChanged" id="SbK-nl-Mny"/>
+                                </connections>
+                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eH8-qE-uUu">
-                                <rect key="frame" x="46" y="540" width="508" height="30"/>
+                                <rect key="frame" x="47" y="501" width="508" height="30"/>
                                 <state key="normal" title="Start">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -36,15 +46,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="d9O-6i-X1M" secondAttribute="bottom" constant="20" id="0Pe-FV-FaB"/>
                             <constraint firstItem="fZc-2J-drb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="30" id="M3B-aw-cIN"/>
-                            <constraint firstItem="eH8-qE-uUu" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="30" id="VZQ-pk-dNx"/>
+                            <constraint firstItem="eH8-qE-uUu" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="31" id="VZQ-pk-dNx"/>
                             <constraint firstItem="fZc-2J-drb" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="50" id="XS8-fI-Phb"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="eH8-qE-uUu" secondAttribute="bottom" constant="30" id="lTQ-t9-HXO"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="eH8-qE-uUu" secondAttribute="trailing" constant="30" id="wft-pD-21a"/>
+                            <constraint firstAttribute="centerX" secondItem="d9O-6i-X1M" secondAttribute="centerX" id="fiw-Oh-l4d"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="eH8-qE-uUu" secondAttribute="bottom" constant="69" id="lTQ-t9-HXO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eH8-qE-uUu" secondAttribute="trailing" constant="29" id="wft-pD-21a"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fZc-2J-drb" secondAttribute="trailing" constant="30" id="xBI-wM-Lbi"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="segmentedControl" destination="d9O-6i-X1M" id="Dg0-ma-CmF"/>
                         <outlet property="startButton" destination="eH8-qE-uUu" id="h5J-zn-qKK"/>
                         <outlet property="stateLabel" destination="fZc-2J-drb" id="aab-YM-rwe"/>
                     </connections>

@@ -14,17 +14,25 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var stateLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
-    enum buttonState {
-        case ButtonStateStart,ButtonStateStop
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
+    enum listenSendState {
+        case RCSBeaconSending,RCSBeaconReceiving
     }
     
-    var state : buttonState = buttonState.ButtonStateStart
+    
+    enum RCSButtonState {
+        case RCSButtonStateStart,RCSButtonStateStop
+    }
+    
+    
+    var buttonState : RCSButtonState = RCSButtonState.RCSButtonStateStart
     var beaconController : RCSBeaconController?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        self.startButton.enabled = false
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "stateNotification:", name: SAS_APP_STATE_CHANGE_NOTIFICATION, object: nil)
     
@@ -45,10 +53,13 @@ class ViewController: UIViewController {
         switch(bState) {
         case .RCSBeaconNotAvailable:
             stateLabel.text = "Not Available"
+            self.startButton.enabled = false
         case .RCSBeaconAvailable:
             stateLabel.text = "Available"
+            self.startButton.enabled = true
         case .RCSBeaconAdvertising:
             stateLabel.text = "Advertising"
+            self.startButton.enabled = true
         }
     }
         
@@ -63,17 +74,23 @@ class ViewController: UIViewController {
        
     }
 
+    @IBAction func segmentClicked(sender: AnyObject) {
+        if let segControl = sender as? UISegmentedControl {
+            println("Segment changed \(segControl.selectedSegmentIndex)")
+        }
+    }
+    
     
     @IBAction func startButtonPushed(sender: AnyObject) {
         let button : UIButton = sender as UIButton
-        if(state == buttonState.ButtonStateStart) {
+        if(buttonState == RCSButtonState.RCSButtonStateStart) {
             beaconController?.startAdvertising()
-            state = buttonState.ButtonStateStop
+            buttonState = RCSButtonState.RCSButtonStateStop
             button.setTitle("Stop", forState: UIControlState.Normal)
         }
         else {
             beaconController?.stopAdvertising()
-            state = buttonState.ButtonStateStart
+            buttonState = RCSButtonState.RCSButtonStateStart
             button.setTitle("Start", forState: UIControlState.Normal)
         }
     }

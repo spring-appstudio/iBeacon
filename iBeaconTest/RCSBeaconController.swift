@@ -40,9 +40,17 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
     
     }
     
-    
+
     func stopAdvertising() {
         peripheralManager!.stopAdvertising()
+    }
+    
+    func startListening() {
+        println("Started listening")
+    }
+    
+    func stopListening {
+        println("Stopped Listening")
     }
     
     override func delete(sender: AnyObject?) {
