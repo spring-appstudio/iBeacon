@@ -30,8 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        sharedBTPeripheralManager!.startAdvertising(dict)
 //        println("Started advertising \(dict)")
         
-        beaconController = RCSBeaconController()
-        beaconController?.startAdvertising()
+      //  beaconController = RCSBeaconController()
+        //beaconController?.startAdvertising()
         
         return true
     }

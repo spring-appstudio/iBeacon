@@ -19,14 +19,17 @@ class ViewController: UIViewController {
     }
     
     var state : buttonState = buttonState.ButtonStateStart
-    
+    var beaconController : RCSBeaconController?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "stateNotification:", name: SAS_APP_STATE_CHANGE_NOTIFICATION, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "advertisingNotification:", name: SAS_ADVERTIZING_CHANGE_NOTIFICATION, object: nil)
-
+    
+        beaconController = RCSBeaconController()
+        beaconController?.setup()
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -37,21 +40,15 @@ class ViewController: UIViewController {
     }
     
     
-    func updateUI(CBmanager : CBPeripheralManager)->Void {
+    func updateUI(bState : RCSBeaconState)->Void {
         
-        switch(CBmanager.state) {
-            case .PoweredOff:
-                stateLabel.text = "Powered Off"
-            case .PoweredOn:
-                stateLabel.text = "Powered On"
-            case .Resetting:
-                stateLabel.text = "Reseting"
-            case .Unauthorized:
-                stateLabel.text = "Unauthorized"
-            case .Unknown:
-                stateLabel.text = "Unknown"
-            case .Unsupported:
-                stateLabel.text = "Unsupported"
+        switch(bState) {
+        case .RCSBeaconNotAvailable:
+            stateLabel.text = "Not Available"
+        case .RCSBeaconAvailable:
+            stateLabel.text = "Available"
+        case .RCSBeaconAdvertising:
+            stateLabel.text = "Advertising"
         }
     }
         
@@ -59,22 +56,24 @@ class ViewController: UIViewController {
     
     func stateNotification(notification : NSNotification)->Void {
         println("Notification \(notification)")
-        updateUI(notification.object! as CBPeripheralManager)
+        
+        if let beaconObject = notification.object as? RCSBeaconController {
+            updateUI(beaconObject.beaconState)
+        }
+       
     }
 
-    
-    
-    func advertizingNotification(notification : NSNotification)->Void {
-        println("Advertising Notification")
-        stateLabel.text = "Advertising"
-    }
     
     @IBAction func startButtonPushed(sender: AnyObject) {
         let button : UIButton = sender as UIButton
         if(state == buttonState.ButtonStateStart) {
+            beaconController?.startAdvertising()
+            state = buttonState.ButtonStateStop
             button.setTitle("Stop", forState: UIControlState.Normal)
         }
         else {
+            beaconController?.stopAdvertising()
+            state = buttonState.ButtonStateStart
             button.setTitle("Start", forState: UIControlState.Normal)
         }
     }
