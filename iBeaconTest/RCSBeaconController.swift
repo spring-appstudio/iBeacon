@@ -13,12 +13,16 @@ import CoreLocation
 let SAS_APP_STATE_CHANGE_NOTIFICATION = "SAS_BEACON_STATE_UPDATE"
 let SAS_ADVERTIZING_CHANGE_NOTIFICATION = "SAS_ADVERTIZING_STATE_UPDATE"
 enum RCSBeaconState {
-    case RCSBeaconNotAvailable,RCSBeaconAvailable,RCSBeaconAdvertising
+    case RCSBeaconNotAvailable,RCSBeaconAvailable,RCSBeaconAdvertising,RCSBeaconSearching
 }
 
 
 class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
 
+    
+    let UUIDString = "89388520-62C6-4F9B-A379-DF853060E5A7"
+    let APPString = "de.spring-appstudio.test"
+    
     var peripheralManager : CBPeripheralManager?
     var beaconState : RCSBeaconState = RCSBeaconState.RCSBeaconNotAvailable
     
@@ -29,27 +33,44 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
     }
     
     func startAdvertising() {
-        let beaconID = NSUUID(UUIDString: "89388520-62C6-4F9B-A379-DF853060E5A7")
-        let beaconRegion = CLBeaconRegion(proximityUUID: beaconID, identifier: "de.spring-appstudio.test")
+        if(beaconState != RCSBeaconState.RCSBeaconAvailable) {
+            return
+        }
+        
+        let beaconID = NSUUID(UUIDString: UUIDString)
+        let beaconRegion = CLBeaconRegion(proximityUUID: beaconID, identifier: APPString)
         
         let dict  = beaconRegion.peripheralDataWithMeasuredPower(nil)
         
         peripheralManager!.startAdvertising(dict)
-        println("Started advertising")
-
-    
     }
     
 
     func stopAdvertising() {
+        if(beaconState != RCSBeaconState.RCSBeaconAdvertising) {
+            return
+        }
+        
+        
         peripheralManager!.stopAdvertising()
+        beaconState = RCSBeaconState.RCSBeaconAvailable
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(SAS_APP_STATE_CHANGE_NOTIFICATION, object:self)
     }
     
     func startListening() {
+        
+        if(beaconState != RCSBeaconState.RCSBeaconAvailable) {
+            return
+        }
         println("Started listening")
     }
     
-    func stopListening {
+    func stopListening() {
+        if(beaconState != RCSBeaconState.RCSBeaconSearching) {
+            return
+        }
+        
         println("Stopped Listening")
     }
     
@@ -58,9 +79,6 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
     }
     
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager!) {
-        println("state update on \(peripheral)")
-        println("Have state \(peripheral.state.rawValue)")
-       // var beaconState : RCSBeaconState
         
         switch(peripheral.state) {
         case .PoweredOff:
@@ -82,11 +100,8 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
     }
     
     func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager!, error: NSError!) {
-        println("Started advertising")
         beaconState = RCSBeaconState.RCSBeaconAdvertising
-        
         NSNotificationCenter.defaultCenter().postNotificationName(SAS_APP_STATE_CHANGE_NOTIFICATION, object:self)
-        
     }
 
    

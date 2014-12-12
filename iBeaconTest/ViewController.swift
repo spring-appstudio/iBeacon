@@ -66,8 +66,7 @@ class ViewController: UIViewController {
     
     
     func stateNotification(notification : NSNotification)->Void {
-        println("Notification \(notification)")
-        
+    
         if let beaconObject = notification.object as? RCSBeaconController {
             updateUI(beaconObject.beaconState)
         }
