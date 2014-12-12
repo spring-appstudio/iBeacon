@@ -57,9 +57,15 @@ class ViewController: UIViewController {
         case .RCSBeaconAvailable:
             stateLabel.text = "Available"
             self.startButton.enabled = true
+            startButton.setTitle("Start", forState: UIControlState.Normal)
         case .RCSBeaconAdvertising:
             stateLabel.text = "Advertising"
             self.startButton.enabled = true
+            startButton.setTitle("Stop", forState: UIControlState.Normal)
+        case .RCSBeaconSearching:
+            stateLabel.text = "Searching"
+            self.startButton.enabled = true
+            startButton.setTitle("Stop", forState: UIControlState.Normal)
         }
     }
         
@@ -75,24 +81,45 @@ class ViewController: UIViewController {
 
     @IBAction func segmentClicked(sender: AnyObject) {
         if let segControl = sender as? UISegmentedControl {
-            println("Segment changed \(segControl.selectedSegmentIndex)")
+      
+            if((segControl.selectedSegmentIndex == 1)&&(beaconController?.beaconState == RCSBeaconState.RCSBeaconAdvertising)) {
+                beaconController?.stopAdvertising()
+            }
+            
+            if((segControl.selectedSegmentIndex == 1)&&(beaconController?.beaconState == RCSBeaconState.RCSBeaconSearching)) {
+                beaconController?.stopListening()
+            }
+            
         }
     }
     
     
     @IBAction func startButtonPushed(sender: AnyObject) {
         let button : UIButton = sender as UIButton
-        if(buttonState == RCSButtonState.RCSButtonStateStart) {
-            beaconController?.startAdvertising()
-            buttonState = RCSButtonState.RCSButtonStateStop
-            button.setTitle("Stop", forState: UIControlState.Normal)
-        }
-        else {
-            beaconController?.stopAdvertising()
-            buttonState = RCSButtonState.RCSButtonStateStart
-            button.setTitle("Start", forState: UIControlState.Normal)
+        
+        switch(segmentedControl.selectedSegmentIndex) {
+        case 0:
+            if (beaconController?.beaconState == RCSBeaconState.RCSBeaconAvailable) {
+                beaconController?.startAdvertising()
+                buttonState = RCSButtonState.RCSButtonStateStop
+            }
+            else {
+                beaconController?.stopAdvertising()
+                buttonState = RCSButtonState.RCSButtonStateStart
+            }
+            
+        case 1:
+            if (beaconController?.beaconState == RCSBeaconState.RCSBeaconAvailable) {
+                beaconController?.startListening()
+                buttonState = RCSButtonState.RCSButtonStateStop
+            }
+            else {
+                beaconController?.stopListening()
+                buttonState = RCSButtonState.RCSButtonStateStart
+            }
+        default:
+            println("Hey there")
         }
     }
-
 }
 
