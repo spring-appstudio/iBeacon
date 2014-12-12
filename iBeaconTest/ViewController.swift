@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.startButton.enabled = false
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "stateNotification:", name: SAS_APP_STATE_CHANGE_NOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "stateNotification:", name: SAS_BEACON_CHANGE_NOTIFICATION, object: nil)
     
         beaconController = RCSBeaconController()
         beaconController?.setup()

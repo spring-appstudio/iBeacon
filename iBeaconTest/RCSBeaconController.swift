@@ -10,7 +10,7 @@ import UIKit
 import CoreBluetooth
 import CoreLocation
 
-let SAS_APP_STATE_CHANGE_NOTIFICATION = "SAS_BEACON_STATE_UPDATE"
+let SAS_BEACON_CHANGE_NOTIFICATION = "SAS_BEACON_STATE_UPDATE"
 let SAS_ADVERTIZING_CHANGE_NOTIFICATION = "SAS_ADVERTIZING_STATE_UPDATE"
 enum RCSBeaconState {
     case RCSBeaconNotAvailable,RCSBeaconAvailable,RCSBeaconAdvertising,RCSBeaconSearching
@@ -54,8 +54,7 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
         
         peripheralManager!.stopAdvertising()
         beaconState = RCSBeaconState.RCSBeaconAvailable
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(SAS_APP_STATE_CHANGE_NOTIFICATION, object:self)
+        notifyStateChange()
     }
     
     func startListening() {
@@ -64,6 +63,8 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
             return
         }
         println("Started listening")
+        beaconState = RCSBeaconState.RCSBeaconSearching
+        notifyStateChange()
     }
     
     func stopListening() {
@@ -72,7 +73,14 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
         }
         
         println("Stopped Listening")
+        beaconState = RCSBeaconState.RCSBeaconAvailable
+        notifyStateChange() 
     }
+    
+    private func notifyStateChange()->Void {
+        NSNotificationCenter.defaultCenter().postNotificationName(SAS_BEACON_CHANGE_NOTIFICATION, object:self)
+    }
+    
     
     override func delete(sender: AnyObject?) {
         peripheralManager!.stopAdvertising()
@@ -96,12 +104,12 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
         }
         
         
-        NSNotificationCenter.defaultCenter().postNotificationName(SAS_APP_STATE_CHANGE_NOTIFICATION, object:self)
+        notifyStateChange()
     }
     
     func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager!, error: NSError!) {
         beaconState = RCSBeaconState.RCSBeaconAdvertising
-        NSNotificationCenter.defaultCenter().postNotificationName(SAS_APP_STATE_CHANGE_NOTIFICATION, object:self)
+        notifyStateChange()
     }
 
    
