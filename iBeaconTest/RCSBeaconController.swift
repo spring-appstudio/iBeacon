@@ -1,4 +1,4 @@
-//
+
 //  RCSBeaconController.swift
 //  iBeaconTest
 //
@@ -10,10 +10,14 @@ import UIKit
 import CoreBluetooth
 import CoreLocation
 
-let SAS_BEACON_CHANGE_NOTIFICATION = "SAS_BEACON_STATE_UPDATE"
-let SAS_ADVERTIZING_CHANGE_NOTIFICATION = "SAS_ADVERTIZING_STATE_UPDATE"
+let RCS_BEACON_CONTROLLER_STATE_NOTIFICATION = "RCS_BEACON_CONTROLLER_STATE_NOTIFICATION"
+let SAS_BEACON_CHANGE_NOTIFICATION = "SAS_"
 enum RCSBeaconState {
     case RCSBeaconNotAvailable,RCSBeaconAvailable,RCSBeaconAdvertising,RCSBeaconSearching
+}
+
+enum RCSBeaconUpdate {
+    case RCSBeaconDetected,RCSBeaconLost
 }
 
 
@@ -71,23 +75,17 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
         
         beaconRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: UUIDString), identifier: APPString)
         
-      
-        
         locationManager?.startMonitoringForRegion(beaconRegion)
-        //locationManager?.startRangingBeaconsInRegion(beaconRegion)
-        //locationManager?.stopMonitoringForRegion(beaconRegion)
-        
+
         beaconState = RCSBeaconState.RCSBeaconSearching
         notifyStateChange()
     }
     
     func stopListening() {
         if(beaconState != RCSBeaconState.RCSBeaconSearching) {
-          //  locationManager?.stopMonitoringForRegion(beaconRegion)
-           // return
+            return
         }
         
-        println("Stopped Listening")
         beaconState = RCSBeaconState.RCSBeaconAvailable
         
         locationManager?.stopRangingBeaconsInRegion(beaconRegion)
@@ -96,7 +94,7 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
     }
     
     private func notifyStateChange()->Void {
-        NSNotificationCenter.defaultCenter().postNotificationName(SAS_BEACON_CHANGE_NOTIFICATION, object:self)
+        NSNotificationCenter.defaultCenter().postNotificationName(RCS_BEACON_CONTROLLER_STATE_NOTIFICATION, object:self)
     }
     
     
