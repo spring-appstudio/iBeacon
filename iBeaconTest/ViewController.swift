@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         switch(bState) {
         case .RCSBeaconNotAvailable:
             stateLabel.text = "Not Available"
-            self.startButton.enabled = false
+            self.startButton.enabled = true
         case .RCSBeaconAvailable:
             stateLabel.text = "Available"
             self.startButton.enabled = true

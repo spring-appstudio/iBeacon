@@ -17,18 +17,23 @@ enum RCSBeaconState {
 }
 
 
-class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
+class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManagerDelegate  {
 
     
     let UUIDString = "89388520-62C6-4F9B-A379-DF853060E5A7"
     let APPString = "de.spring-appstudio.test"
     
     var peripheralManager : CBPeripheralManager?
+    var locationManager : CLLocationManager?
+    var beaconRegion : CLBeaconRegion?
     var beaconState : RCSBeaconState = RCSBeaconState.RCSBeaconNotAvailable
     
     func setup()->Void {
      
         peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
+        locationManager?.requestAlwaysAuthorization() 
 
     }
     
@@ -63,18 +68,31 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
             return
         }
         println("Started listening")
+        
+        beaconRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: UUIDString), identifier: APPString)
+        
+      
+        
+        locationManager?.startMonitoringForRegion(beaconRegion)
+        //locationManager?.startRangingBeaconsInRegion(beaconRegion)
+        //locationManager?.stopMonitoringForRegion(beaconRegion)
+        
         beaconState = RCSBeaconState.RCSBeaconSearching
         notifyStateChange()
     }
     
     func stopListening() {
         if(beaconState != RCSBeaconState.RCSBeaconSearching) {
-            return
+          //  locationManager?.stopMonitoringForRegion(beaconRegion)
+           // return
         }
         
         println("Stopped Listening")
         beaconState = RCSBeaconState.RCSBeaconAvailable
-        notifyStateChange() 
+        
+        locationManager?.stopRangingBeaconsInRegion(beaconRegion)
+        
+        notifyStateChange()
     }
     
     private func notifyStateChange()->Void {
@@ -111,6 +129,35 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate  {
         beaconState = RCSBeaconState.RCSBeaconAdvertising
         notifyStateChange()
     }
+    
+    func locationManager(manager: CLLocationManager!, didStartMonitoringForRegion region: CLRegion!) {
+        println("Started monitoring \(region.description)")
+    }
 
+    func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!) {
+        println("Entered region")
+    }
+    
+    func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
+        println("Exited region")
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        println("New location")
+    }
+    
+    func locationManager(manager: CLLocationManager!, monitoringDidFailForRegion region: CLRegion!, withError error: NSError!) {
+        println("Monitoring failed")
+    }
+    
+    
+    func locationManager(manager: CLLocationManager!, didRangeBeacons beacons: [AnyObject]!, inRegion region: CLBeaconRegion!) {
+        println("Did Range bacons \(beacons.count)")
+    }
+    func locationManager(manager: CLLocationManager!, rangingBeaconsDidFailForRegion region: CLBeaconRegion!, withError error: NSError!) {
+        println("Ranging bacons failed")
+    }
+    
+    
    
 }
