@@ -11,7 +11,7 @@ import CoreBluetooth
 import CoreLocation
 
 let RCS_BEACON_CONTROLLER_STATE_NOTIFICATION = "RCS_BEACON_CONTROLLER_STATE_NOTIFICATION"
-let SAS_BEACON_CHANGE_NOTIFICATION = "SAS_"
+let RCS_BEACON_CHANGE_NOTIFICATION = "RCS_"
 enum RCSBeaconState {
     case RCSBeaconNotAvailable,RCSBeaconAvailable,RCSBeaconAdvertising,RCSBeaconSearching
 }
@@ -25,7 +25,7 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
 
     
     let UUIDString = "89388520-62C6-4F9B-A379-DF853060E5A7"
-    let APPString = "de.spring-appstudio.test"
+    let APPString = "beaconTest"
     
     var peripheralManager : CBPeripheralManager?
     var locationManager : CLLocationManager?
@@ -71,7 +71,6 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
         if(beaconState != RCSBeaconState.RCSBeaconAvailable) {
             return
         }
-        println("Started listening")
         
         beaconRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: UUIDString), identifier: APPString)
         

@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var stateLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var textField: UITextView!
     
     enum listenSendState {
         case RCSBeaconSending,RCSBeaconReceiving
@@ -28,10 +29,28 @@ class ViewController: UIViewController {
     
     var buttonState : RCSButtonState = RCSButtonState.RCSButtonStateStart
     var beaconController : RCSBeaconController?
+    let dateFormatter : NSDateFormatter
+    
+    
+//    override init() {
+//        dateFormatter = NSDateFormatter()
+//        super.init()
+//    }
+
+    required init(coder aDecoder: NSCoder) {
+        dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        
+        super.init(coder: aDecoder)
+        
+        
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.textField.text = ""
         self.startButton.enabled = false
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "stateNotification:", name: RCS_BEACON_CONTROLLER_STATE_NOTIFICATION, object: nil)
@@ -97,8 +116,9 @@ class ViewController: UIViewController {
     @IBAction func startButtonPushed(sender: AnyObject) {
         let button : UIButton = sender as UIButton
         
-        switch(segmentedControl.selectedSegmentIndex) {
-        case 0:
+        appendText("Test")
+        
+        if(segmentedControl.selectedSegmentIndex == 0) {
             if (beaconController?.beaconState == RCSBeaconState.RCSBeaconAvailable) {
                 beaconController?.startAdvertising()
                 buttonState = RCSButtonState.RCSButtonStateStop
@@ -107,8 +127,8 @@ class ViewController: UIViewController {
                 beaconController?.stopAdvertising()
                 buttonState = RCSButtonState.RCSButtonStateStart
             }
-            
-        case 1:
+        }
+        else {
             if (beaconController?.beaconState == RCSBeaconState.RCSBeaconAvailable) {
                 beaconController?.startListening()
                 buttonState = RCSButtonState.RCSButtonStateStop
@@ -117,9 +137,14 @@ class ViewController: UIViewController {
                 beaconController?.stopListening()
                 buttonState = RCSButtonState.RCSButtonStateStart
             }
-        default:
-            println("Hey there")
+        
         }
+    }
+    
+    func appendText(str : String)->Void {
+        
+        let date = NSDate()
+        self.textField.text = self.textField.text + "\n" + dateFormatter.stringFromDate(date) + ": " + str
     }
 }
 

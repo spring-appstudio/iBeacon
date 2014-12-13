@@ -43,15 +43,25 @@
                                     <action selector="startButtonPushed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Xd1-2E-eUr"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yF7-Ta-0x4">
+                                <rect key="frame" x="46" y="99" width="508" height="382"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="d9O-6i-X1M" secondAttribute="bottom" constant="20" id="0Pe-FV-FaB"/>
+                            <constraint firstItem="eH8-qE-uUu" firstAttribute="top" secondItem="yF7-Ta-0x4" secondAttribute="bottom" constant="20" id="LhJ-Db-bky"/>
                             <constraint firstItem="fZc-2J-drb" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="30" id="M3B-aw-cIN"/>
+                            <constraint firstItem="yF7-Ta-0x4" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="30" id="TdE-aw-NfW"/>
                             <constraint firstItem="eH8-qE-uUu" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="31" id="VZQ-pk-dNx"/>
                             <constraint firstItem="fZc-2J-drb" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="50" id="XS8-fI-Phb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yF7-Ta-0x4" secondAttribute="trailing" constant="30" id="fPo-Gb-ZPI"/>
                             <constraint firstAttribute="centerX" secondItem="d9O-6i-X1M" secondAttribute="centerX" id="fiw-Oh-l4d"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="eH8-qE-uUu" secondAttribute="bottom" constant="69" id="lTQ-t9-HXO"/>
+                            <constraint firstItem="yF7-Ta-0x4" firstAttribute="top" secondItem="fZc-2J-drb" secondAttribute="bottom" constant="8.5" id="ld7-MR-4KL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eH8-qE-uUu" secondAttribute="trailing" constant="29" id="wft-pD-21a"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fZc-2J-drb" secondAttribute="trailing" constant="30" id="xBI-wM-Lbi"/>
                         </constraints>
@@ -60,6 +70,7 @@
                         <outlet property="segmentedControl" destination="d9O-6i-X1M" id="Dg0-ma-CmF"/>
                         <outlet property="startButton" destination="eH8-qE-uUu" id="h5J-zn-qKK"/>
                         <outlet property="stateLabel" destination="fZc-2J-drb" id="aab-YM-rwe"/>
+                        <outlet property="textField" destination="yF7-Ta-0x4" id="Wz7-fV-Bkp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
