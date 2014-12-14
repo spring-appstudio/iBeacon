@@ -11,13 +11,14 @@ import CoreBluetooth
 import CoreLocation
 
 let RCS_BEACON_CONTROLLER_STATE_NOTIFICATION = "RCS_BEACON_CONTROLLER_STATE_NOTIFICATION"
-let RCS_BEACON_CHANGE_NOTIFICATION = "RCS_"
+let RCS_BEACON_EVENT_NOTIFICATION = "RCS_BEACON_EVENT_NOTICICATION"
 enum RCSBeaconState {
     case RCSBeaconNotAvailable,RCSBeaconAvailable,RCSBeaconAdvertising,RCSBeaconSearching
 }
 
-enum RCSBeaconUpdate {
-    case RCSBeaconDetected,RCSBeaconLost
+enum RCSBeaconEvent : String {
+    case RCSBeaconDetected = "RCSBeaconDetected"
+    case RCSBeaconLost = "RCSBeaconLost"
 }
 
 
@@ -37,7 +38,9 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
         peripheralManager = CBPeripheralManager(delegate: self, queue: nil)
         locationManager = CLLocationManager()
         locationManager?.delegate = self
-        locationManager?.requestAlwaysAuthorization() 
+        locationManager?.requestAlwaysAuthorization()
+        
+        notifyBeaconEvent(.RCSBeaconDetected)
 
     }
     
@@ -97,6 +100,25 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
     }
     
     
+    private func notifyBeaconEvent(event : RCSBeaconEvent)->Void {
+        
+        enum TestEnum : String {
+            case A = "a"
+            case B = "b"
+        }
+        
+        if let a = TestEnum(rawValue: "e") {
+            println(a.rawValue)
+        }
+        
+        
+        
+        let dict : Dictionary<NSObject,AnyObject> = ["bar" : NSDate(),"snoo":event.rawValue]
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(RCS_BEACON_EVENT_NOTIFICATION, object: self, userInfo: dict)
+    }
+    
+    
     override func delete(sender: AnyObject?) {
         peripheralManager!.stopAdvertising()
     }
@@ -139,22 +161,9 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
         println("Exited region")
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        println("New location")
-    }
-    
     func locationManager(manager: CLLocationManager!, monitoringDidFailForRegion region: CLRegion!, withError error: NSError!) {
         println("Monitoring failed")
     }
-    
-    
-    func locationManager(manager: CLLocationManager!, didRangeBeacons beacons: [AnyObject]!, inRegion region: CLBeaconRegion!) {
-        println("Did Range bacons \(beacons.count)")
-    }
-    func locationManager(manager: CLLocationManager!, rangingBeaconsDidFailForRegion region: CLBeaconRegion!, withError error: NSError!) {
-        println("Ranging bacons failed")
-    }
-    
     
    
 }
