@@ -12,6 +12,10 @@ import CoreLocation
 
 let RCS_BEACON_CONTROLLER_STATE_NOTIFICATION = "RCS_BEACON_CONTROLLER_STATE_NOTIFICATION"
 let RCS_BEACON_EVENT_NOTIFICATION = "RCS_BEACON_EVENT_NOTICICATION"
+
+let RCS_BEACON_EVENT_TIMESTAMP = "RCS_BEACON_EVENT_TIMESTAMP"
+let RCS_BEACON_EVENT_TYPE = "RCS_BEACON_EVENT_TYPE"
+
 enum RCSBeaconState {
     case RCSBeaconNotAvailable,RCSBeaconAvailable,RCSBeaconAdvertising,RCSBeaconSearching
 }
@@ -102,20 +106,10 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
     
     private func notifyBeaconEvent(event : RCSBeaconEvent)->Void {
         
-        enum TestEnum : String {
-            case A = "a"
-            case B = "b"
-        }
+        let eventDict : Dictionary<NSObject,AnyObject> = [RCS_BEACON_EVENT_TIMESTAMP : NSDate(),RCS_BEACON_EVENT_TYPE:event.rawValue]
         
-        if let a = TestEnum(rawValue: "e") {
-            println(a.rawValue)
-        }
-        
-        
-        
-        let dict : Dictionary<NSObject,AnyObject> = ["bar" : NSDate(),"snoo":event.rawValue]
-        
-        NSNotificationCenter.defaultCenter().postNotificationName(RCS_BEACON_EVENT_NOTIFICATION, object: self, userInfo: dict)
+        NSNotificationCenter.defaultCenter().postNotificationName(RCS_BEACON_EVENT_NOTIFICATION, object: self, userInfo: eventDict
+        )
     }
     
     
@@ -155,6 +149,7 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
 
     func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!) {
         println("Entered region")
+        
     }
     
     func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
