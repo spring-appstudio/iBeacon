@@ -150,10 +150,13 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
     func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!) {
         println("Entered region")
         
+        notifyBeaconEvent(.RCSBeaconDetected)
+        
     }
     
     func locationManager(manager: CLLocationManager!, didExitRegion region: CLRegion!) {
         println("Exited region")
+         notifyBeaconEvent(.RCSBeaconLost)
     }
     
     func locationManager(manager: CLLocationManager!, monitoringDidFailForRegion region: CLRegion!, withError error: NSError!) {

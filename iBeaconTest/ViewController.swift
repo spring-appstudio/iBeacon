@@ -30,12 +30,6 @@ class ViewController: UIViewController {
     var buttonState : RCSButtonState = RCSButtonState.RCSButtonStateStart
     var beaconController : RCSBeaconController?
     let dateFormatter : NSDateFormatter
-    
-    
-//    override init() {
-//        dateFormatter = NSDateFormatter()
-//        super.init()
-//    }
 
     required init(coder aDecoder: NSCoder) {
         dateFormatter = NSDateFormatter()
@@ -43,8 +37,6 @@ class ViewController: UIViewController {
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
         
         super.init(coder: aDecoder)
-        
-        
     }
     
     
@@ -97,6 +89,16 @@ class ViewController: UIViewController {
         }
        
     }
+    
+    func eventNotification(notification : NSNotification)->Void {
+        println("Have dict \(notification.userInfo)")
+        
+        if let info = notification.userInfo {
+            if let type = info[RCS_BEACON_EVENT_TYPE] as? String {
+                appendText(type)
+            }
+        }
+    }
 
     @IBAction func segmentClicked(sender: AnyObject) {
         if let segControl = sender as? UISegmentedControl {
@@ -141,9 +143,11 @@ class ViewController: UIViewController {
         }
     }
     
-    func appendText(str : String)->Void {
-        
-        let date = NSDate()
+    func appendText(str: String) {
+        appendText(str,date:NSDate())
+    }
+    
+    func appendText(str : String, date : NSDate)->Void {
         self.textField.text = self.textField.text + "\n" + dateFormatter.stringFromDate(date) + ": " + str
     }
 }
