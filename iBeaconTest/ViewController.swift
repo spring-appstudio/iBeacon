@@ -46,6 +46,9 @@ class ViewController: UIViewController {
         self.startButton.enabled = false
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "stateNotification:", name: RCS_BEACON_CONTROLLER_STATE_NOTIFICATION, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "eventNotification:", name: RCS_BEACON_EVENT_NOTIFICATION, object: nil)
+
     
         beaconController = RCSBeaconController()
         beaconController?.setup()
@@ -91,8 +94,6 @@ class ViewController: UIViewController {
     }
     
     func eventNotification(notification : NSNotification)->Void {
-        println("Have dict \(notification.userInfo)")
-        
         if let info = notification.userInfo {
             if let type = info[RCS_BEACON_EVENT_TYPE] as? String {
                 appendText(type)

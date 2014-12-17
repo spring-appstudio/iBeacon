@@ -43,9 +43,6 @@ class RCSBeaconController: NSObject, CBPeripheralManagerDelegate,CLLocationManag
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestAlwaysAuthorization()
-        
-        notifyBeaconEvent(.RCSBeaconDetected)
-
     }
     
     func startAdvertising() {
