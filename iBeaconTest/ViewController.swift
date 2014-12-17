@@ -119,26 +119,30 @@ class ViewController: UIViewController {
     @IBAction func startButtonPushed(sender: AnyObject) {
         let button : UIButton = sender as UIButton
         
-        appendText("Test")
+        
         
         if(segmentedControl.selectedSegmentIndex == 0) {
             if (beaconController?.beaconState == RCSBeaconState.RCSBeaconAvailable) {
                 beaconController?.startAdvertising()
                 buttonState = RCSButtonState.RCSButtonStateStop
+                appendText("Advertise Start")
             }
             else {
                 beaconController?.stopAdvertising()
                 buttonState = RCSButtonState.RCSButtonStateStart
+                appendText("Advertise Stop")
             }
         }
         else {
             if (beaconController?.beaconState == RCSBeaconState.RCSBeaconAvailable) {
                 beaconController?.startListening()
                 buttonState = RCSButtonState.RCSButtonStateStop
+                appendText("Listen Start")
             }
             else {
                 beaconController?.stopListening()
                 buttonState = RCSButtonState.RCSButtonStateStart
+                appendText("Listen Stop")
             }
         
         }
